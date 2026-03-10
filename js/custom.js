@@ -1,17 +1,22 @@
 // JavaScript Document
 
-$(window).load(function () {
+// Preloader — use modern .on('load') instead of deprecated .load()
+$(window).on('load', function () {
     "use strict";
-    // makes sure the whole site is loaded
-    $('#status').fadeOut(); // will first fade out the loading animation
-    $('#preloader').delay(350).fadeOut('slow'); // will fade out the white DIV that covers the website.
-    $('body').delay(350).css({
-        'overflow': 'visible'
-    });
-})
+    $('#status').fadeOut();
+    $('#preloader').delay(350).fadeOut('slow');
+    $('body').delay(350).css({ 'overflow': 'visible' });
+});
 
 $(document).ready(function () {
     "use strict";
+
+    // AOS — init first so animated elements are never stuck invisible
+    AOS.init({
+        duration: 1200,
+        once: true,
+        disable: 'mobile'
+    });
 
     // scroll menu
     var sections = $('.section'),
@@ -20,15 +25,12 @@ $(document).ready(function () {
 
     $(window).on('scroll', function () {
         var cur_pos = $(this).scrollTop();
-
         sections.each(function () {
             var top = $(this).offset().top - nav_height,
                 bottom = top + $(this).outerHeight();
-
             if (cur_pos >= top && cur_pos <= bottom) {
                 nav.find('a').removeClass('active');
                 sections.removeClass('active');
-
                 $(this).addClass('active');
                 nav.find('a[href="#' + $(this).attr('id') + '"]').addClass('active');
             }
@@ -38,14 +40,11 @@ $(document).ready(function () {
     nav.find('a').on('click', function () {
         var $el = $(this),
             id = $el.attr('href');
-
         $('html, body').animate({
             scrollTop: $(id).offset().top - nav_height + 2
         }, 600);
-
         return false;
     });
-
 
     // Menu opacity
     if ($(window).scrollTop() > 80) {
@@ -61,110 +60,31 @@ $(document).ready(function () {
         }
     });
 
-
-
-    // Parallax
-    var parallax = function () {
+    // Parallax — wrapped in try/catch so it never blocks other init
+    try {
         $(window).stellar();
-    };
+    } catch (e) {
+        console.warn('Stellar.js init skipped:', e);
+    }
 
-    $(function () {
-        parallax();
-    });
-
-    // AOS
-    AOS.init({
-        duration: 1200,
-        once: true,
-        disable: 'mobile'
-    });
-
-    //  isotope
-    $('#projects').waitForImages(function () {
-        var $container = $('.portfolio_container');
-        $container.isotope({
-            filter: '*',
-        });
-
-        $('.portfolio_filter a').click(function () {
-            $('.portfolio_filter .active').removeClass('active');
-            $(this).addClass('active');
-
-            var selector = $(this).attr('data-filter');
-            $container.isotope({
-                filter: selector,
-                animationOptions: {
-                    duration: 500,
-                    animationEngine: "jquery"
-                }
-            });
-            return false;
-        });
-
-    });
-
-    //animatedModal
-    // $("#demo01,#demo02,#demo03,#demo04,#demo05,#demo06,#demo07,#demo08,#demo09").animatedModal();
-    // $("#demo01").animatedModal1();
-    
-    // Contact Form 	
-
-    // validate contact form
+    // Contact form validation
     $(function () {
         $('#contact-form').validate({
             rules: {
-                name: {
-                    required: true,
-                    minlength: 2
-                },
-                email: {
-                    required: true
-                },
-                phone: {
-                    required: false
-                },
-                message: {
-                    required: true
-                }
-
+                name: { required: true, minlength: 2 },
+                email: { required: true },
+                phone: { required: false },
+                message: { required: true }
             },
             messages: {
                 name: {
                     required: "This field is required",
-                    minlength: "your name must consist of at least 2 characters"
+                    minlength: "Your name must be at least 2 characters"
                 },
-                email: {
-                    required: "This field is required"
-                },
-                message: {
-                    required: "This field is required"
-                }
-            },
+                email: { required: "This field is required" },
+                message: { required: "This field is required" }
+            }
         });
-
     });
+
 });
-
-
-// Contact Form
-
-// submitHandler: function (form) {
-//     $(form).ajaxSubmit({
-//         type: "POST",
-//         data: $(form).serialize(),
-//         url: "process.php",
-//         success: function () {
-//             $('#contact :input').attr('disabled', 'disabled');
-//             $('#contact').fadeTo("slow", 1, function () {
-//                 $(this).find(':input').attr('disabled', 'disabled');
-//                 $(this).find('label').css('cursor', 'default');
-//                 $('#success').fadeIn();
-//             });
-//         },
-//         error: function () {
-//             $('#contact').fadeTo("slow", 1, function () {
-//                 $('#error').fadeIn();
-//             });
-//         }
-//     });
-// }
