@@ -36,7 +36,7 @@
 /* Google fonts & font family
 ==================================================*/
 
-@import 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap';
+@import 'https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i|Playfair+Display:400,400i,700,700i,900,900i';
 
 /*
 font-family: 'Playfair Display', serif;
@@ -274,38 +274,16 @@ a.active {
     background: url(../img/home-bg-2.jpg);
     background-size: auto;
     height: 100vh;
-    position: relative;
-    overflow: hidden;
-}
-
-.disply-table {
-    display: table;
-    height: 100vh;
-    width: 100%;
 }
 
 .table-cell {
     display: table-cell;
     vertical-align: middle;
-    width: 55%;
 }
 
-#profilediv {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-#profilepic {
-    width: 400px;
-    height: auto;
-    display: block;
-    margin-top: 80px;
-    filter: grayscale(100%);
+.disply-table {
+    display: table;
+    height: 100vh;
 }
 
 
@@ -770,6 +748,11 @@ fieldset {
 }
 
 /* Profile photo — positioned in home section CSS above */
+#profilepic {
+    margin-top: 150px;
+    margin-left: 500px;
+    filter: grayscale(100%);
+}
 
 .resumediv{ 
     margin-top: 25px;
@@ -839,10 +822,11 @@ fieldset {
         height: 760px;
     }
     #profilepic{
-        display: none;
+        margin: 40px 30px 0px 50px;
+        width: 300px;
     }
     #profilediv{
-        display: none;
+        display: block;
     }
     .table-cell{
         display: block;
@@ -1027,12 +1011,6 @@ fieldset {
 #experience{
     padding-top: 60px;
     padding-bottom: 40px;
-}
-
-
-/* Hero title two-line split */
-.hero-break {
-    display: block;
 }
 
 
